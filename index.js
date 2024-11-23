@@ -28,15 +28,16 @@ app.get("/api/:date?", (req, res)=>{
   const param = req.params.date
   if(param == null){
     const now = Date.now()
-    res.json({"utc" : new Date(now).toString(), "unix" : now})
+    res.json({"utc" : new Date(now), "unix" : now})
     return
   }
   const ms = isNaN(Number(param)) ? new Date(param).getTime() : new Date(Number(param)).getTime()
-  if(ms == null){
+  if(isNaN(ms)){
     res.json({error : "Invalid Date"})
   }
   else{
-    res.json({"utc" : new Date(ms).toString(), "unix" : ms})
+    console.log({"utc" : new Date(ms).toUTCString() , "unix" : ms})
+    res.json({"utc" : new Date(ms).toUTCString() , "unix" : ms})
   }
 })
 
